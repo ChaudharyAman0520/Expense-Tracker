@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.example.demo.entity.Expense;
 import com.example.demo.repository.ExpenseRepository;
@@ -21,7 +22,7 @@ public class ExpenseService {
         return expenseRepository.findAll();
     }
 
-    public Expense getExpenseById(Integer id) {
+    public Optional<Expense> getExpenseById(Integer id) {
         return expenseRepository.findById(id);
     }
 
