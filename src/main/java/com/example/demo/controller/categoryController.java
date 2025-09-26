@@ -28,8 +28,16 @@ public class categoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Category>> getCategoryById(@PathVariable Integer id) {
-        return ResponseEntity.ok(categoryService.getCategoryById(id));
+    public ResponseEntity<Category> getCategoryById(@PathVariable Integer id) {
+        Optional<Category> category = categoryService.getCategoryById(id);
+        if (category.isPresent())
+        {
+            return ResponseEntity.ok(category.get());
+        }
+        else
+        {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping("/{id}")
