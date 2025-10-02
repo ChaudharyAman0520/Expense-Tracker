@@ -26,7 +26,7 @@ public class ExpenseService {
         return expenseRepository.findById(id);
     }
 
-    public Expense updateExpense(Long id, Expense expense) {
+    public Expense updateExpense(Integer id, Expense expense) {
         return expenseRepository.save(expense);
     }
 
