@@ -27,7 +27,17 @@ public class ExpenseService {
     }
 
     public Expense updateExpense(Integer id, Expense expense) {
-        return expenseRepository.save(expense);
+        Optional<Expense> optionalExpense = expenseRepository.findById(id);
+        if(!optionalExpense.isPresent()){
+            throw new RuntimeException("Category Not Found With id "+id);
+        }
+        Expense existingExpense = optionalExpense.get();
+        existingExpense.setUser(expense.getUser());
+        existingExpense.setCategory(expense.getCategory());
+        existingExpense.setExpenseAmount(expense.getExpenseAmount());
+        existingExpense.setExpenseDate(expense.getExpenseDate());
+        existingExpense.setNote(expense.getNote());
+        return expenseRepository.save(existingExpense);
     }
 
     public void deleteExpense(Integer id) {

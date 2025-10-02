@@ -26,8 +26,15 @@ public class CategoryService {
         return categoryRepository.findById(id);
     }
 
-    public Category updateCategory(Category category) {
-        return categoryRepository.save(category);
+    public Category updateCategory(Integer id,Category category) {
+        Optional<Category> optionalCategory = categoryRepository.findById(id);
+        if(!optionalCategory.isPresent()){
+            throw new RuntimeException("Category Not Found With id "+id);
+        }
+        Category existingCategory = optionalCategory.get();
+        existingCategory.setCategoryName(category.getCategoryName());
+        existingCategory.setDescription(category.getDescription());
+        return categoryRepository.save(existingCategory);
     }
 
     public void deleteCategory(Integer id) {

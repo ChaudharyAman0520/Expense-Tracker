@@ -45,7 +45,7 @@ public class budgetController {
     public ResponseEntity<Budget> updateBudget(
             @PathVariable Integer id,
             @RequestBody Budget budgetDetails){
-        return ResponseEntity.ok(budgetService.updateBudget(budgetDetails));
+        return ResponseEntity.ok(budgetService.updateBudget(id,budgetDetails));
     }
 
     @DeleteMapping("/{id}")

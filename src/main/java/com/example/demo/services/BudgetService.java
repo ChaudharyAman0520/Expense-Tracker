@@ -26,8 +26,18 @@ public class BudgetService {
         return budgetRepository.findById(id);
     }
 
-    public Budget updateBudget(Budget budget) {
-        return budgetRepository.save(budget);
+    public Budget updateBudget(Integer id,Budget budget) {
+        Optional<Budget> optionalBudget = budgetRepository.findById(id);
+        if (!optionalBudget.isPresent()) {
+            throw new RuntimeException("Budget not found with id " + id);
+        }
+        Budget existingBudget = optionalBudget.get();
+        existingBudget.setUser(budget.getUser());
+        existingBudget.setCategory(budget.getCategory());
+        existingBudget.setBudgetAmount(budget.getBudgetAmount());
+        existingBudget.setStartDate(budget.getStartDate());
+        existingBudget.setEndDate(budget.getEndDate());
+        return budgetRepository.save(existingBudget);
     }
 
     public void deleteBudget(Integer id) {
