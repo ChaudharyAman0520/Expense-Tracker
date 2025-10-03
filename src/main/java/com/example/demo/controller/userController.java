@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.UserRequest;
 import com.example.demo.entity.User;
 import com.example.demo.services.UserService;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,10 @@ public class userController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user){
+    public ResponseEntity<User> createUser(@RequestBody UserRequest userRequest){
+        User user = new User();
+        user.setName(userRequest.getName());
+        user.setEmail(userRequest.getEmail());
         return ResponseEntity.ok(userService.CreateUser(user));
     }
 
@@ -44,7 +48,10 @@ public class userController {
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(
             @PathVariable Integer id,
-            @RequestBody User userDetails){
+            @RequestBody UserRequest userRequest){
+        User userDetails = new User();
+        userDetails.setName(userRequest.getName());
+        userDetails.setEmail(userRequest.getEmail());
         return ResponseEntity.ok(userService.updateUser(id,userDetails));
     }
 

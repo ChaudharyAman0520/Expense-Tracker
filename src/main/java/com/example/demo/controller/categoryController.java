@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.CategoryRequest;
 import com.example.demo.entity.Category;
 import com.example.demo.services.CategoryService;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,10 @@ public class categoryController {
     }
 
     @PostMapping
-    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
+    public ResponseEntity<Category> createCategory(@RequestBody CategoryRequest categoryRequest) {
+        Category category = new Category();
+        category.setCategoryName(categoryRequest.getCategoryName());
+        category.setDescription(categoryRequest.getDescription());
         return ResponseEntity.ok(categoryService.createCategory(category));
     }
 
@@ -43,7 +47,10 @@ public class categoryController {
     @PutMapping("/{id}")
     public ResponseEntity<Category> updateCategory(
             @PathVariable Integer id,
-            @RequestBody Category categoryDetails) {
+            @RequestBody CategoryRequest categoryRequest) {
+        Category categoryDetails = new Category();
+        categoryDetails.setCategoryName(categoryRequest.getCategoryName());
+        categoryDetails.setDescription(categoryRequest.getDescription());
         return ResponseEntity.ok(categoryService.updateCategory(id,categoryDetails));
     }
 

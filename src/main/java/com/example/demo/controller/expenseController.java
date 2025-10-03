@@ -1,8 +1,12 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.ExpenseRequest;
 import com.example.demo.entity.Category;
 import com.example.demo.entity.Expense;
+import com.example.demo.entity.User;
+import com.example.demo.services.CategoryService;
 import com.example.demo.services.ExpenseService;
+import com.example.demo.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,13 +18,30 @@ import java.util.Optional;
 public class expenseController {
 
     private final ExpenseService expenseService;
-
-    public expenseController(ExpenseService expenseService) {
+    private final UserService userService;
+    private final CategoryService categoryService;
+    public expenseController(ExpenseService expenseService, UserService userService, CategoryService categoryService) {
         this.expenseService = expenseService;
+        this.userService = userService;
+        this.categoryService = categoryService;
     }
 
     @PostMapping
-    public ResponseEntity<Expense> createExpense(@RequestBody Expense expense){
+    public ResponseEntity<Expense> createExpense(@RequestBody ExpenseRequest request){
+        Optional<User> user = userService.getUserById(request.getUserId());
+        Optional<Category> category = categoryService.getCategoryById(request.getCategoryId());
+
+        if (user.isEmpty() || category.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Expense expense = new Expense();
+        expense.setUser(user.get());
+        expense.setCategory(category.get());
+        expense.setExpenseAmount(request.getExpenseAmount());
+        expense.setExpenseDate(request.getExpenseDate());
+        expense.setNote(request.getNote());
+
         return ResponseEntity.ok(expenseService.createExpense(expense));
     }
 
@@ -45,7 +66,20 @@ public class expenseController {
     @PutMapping("/{id}")
     public ResponseEntity<Expense> updateExpense(
             @PathVariable Integer id,
-            @RequestBody Expense expenseDetails) {
+            @RequestBody ExpenseRequest request) {
+        Optional<User> user = userService.getUserById(request.getUserId());
+        Optional<Category> category = categoryService.getCategoryById(request.getCategoryId());
+
+        if (user.isEmpty() || category.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Expense expenseDetails = new Expense();
+        expenseDetails.setUser(user.get());
+        expenseDetails.setCategory(category.get());
+        expenseDetails.setExpenseAmount(request.getExpenseAmount());
+        expenseDetails.setExpenseDate(request.getExpenseDate());
+        expenseDetails.setNote(request.getNote());
         return ResponseEntity.ok(expenseService.updateExpense(id, expenseDetails));
     }
 
