@@ -43,4 +43,8 @@ public class ExpenseService {
     public void deleteExpense(Integer id) {
         expenseRepository.deleteById(id);
     }
+
+    public List<Expense> findByCategoryNameRaw(String categoryName) {
+        return expenseRepository.findByCategoryName(categoryName);
+    }
 }

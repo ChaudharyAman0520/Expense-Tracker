@@ -89,4 +89,13 @@ public class expenseController {
         expenseService.deleteExpense(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/category/{categoryName}")
+    public ResponseEntity<List<Expense>> getExpensesByCategory(@PathVariable String categoryName) {
+        List<Expense> expenses = expenseService.findByCategoryNameRaw(categoryName);
+        if(expenses.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(expenses);
+    }
 }
