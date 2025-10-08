@@ -27,5 +27,6 @@ public class User {
     @Column(updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-
+    @Column(nullable = false)
+    private String password;
 }

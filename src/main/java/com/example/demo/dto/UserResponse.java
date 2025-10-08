@@ -9,8 +9,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class UserRequest {
+public class UserResponse {
+    private Integer userID;
     private String name;
     private String email;
-    private String password;
 }
