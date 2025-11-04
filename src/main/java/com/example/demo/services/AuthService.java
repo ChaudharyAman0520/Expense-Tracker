@@ -28,6 +28,7 @@ public class AuthService {
         user.setEmail(userRequest.getEmail());
         user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         userRepository.save(user);
+        user.setWalletBalance(java.math.BigDecimal.ZERO);
         return "User Created Successfully";
     }
 
@@ -40,6 +41,6 @@ public class AuthService {
         if(!passwordEncoder.matches(userRequest.getPassword(), user.getPassword())){
             throw new RuntimeException("Invalid Password");
         }
-        return new UserResponse(user.getUserId(),user.getName(),user.getEmail());
+        return new UserResponse(user.getUserId(),user.getName(),user.getEmail() , user.getWalletBalance() ,user.getCreatedAt());
     }
 }

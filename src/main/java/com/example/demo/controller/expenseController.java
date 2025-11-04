@@ -98,4 +98,13 @@ public class expenseController {
         }
         return ResponseEntity.ok(expenses);
     }
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Expense>> getExpensesByUserId(@PathVariable Integer userId) {
+        // We will create this new method in the service
+        List<Expense> expenses = expenseService.findExpensesByUserId(userId);
+        if(expenses.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(expenses);
+    }
 }

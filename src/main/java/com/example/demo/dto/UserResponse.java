@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -13,4 +16,7 @@ public class UserResponse {
     private Integer userID;
     private String name;
     private String email;
+    private BigDecimal walletBalance;
+    private LocalDateTime createdAt;
+
 }

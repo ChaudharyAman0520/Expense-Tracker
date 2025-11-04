@@ -89,4 +89,13 @@ public class budgetController {
         budgetService.deleteBudget(id);
         return ResponseEntity.noContent().build();
     }
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Budget>> getBudgetsByUserId(@PathVariable Integer userId) {
+        // We will create this new method in the service
+        List<Budget> budgets = budgetService.findBudgetsByUserId(userId);
+        if(budgets.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(budgets);
+    }
 }

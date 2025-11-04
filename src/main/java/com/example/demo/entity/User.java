@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
@@ -29,4 +31,7 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    @Column(precision = 10, scale = 2) // Good for currency
+    private BigDecimal walletBalance;
 }
