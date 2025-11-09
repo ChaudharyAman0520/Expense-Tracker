@@ -75,8 +75,6 @@ public class ReportService {
                 .map(ExpenseResponse::new) // Uses the DTO constructor
                 .collect(Collectors.toList());
 
-
-        // 9. Build and return the final response DTO
         return ReportResponse.builder()
                 .totalBudget(totalBudget)
                 .remainingBudget(remainingBudget)
@@ -88,9 +86,6 @@ public class ReportService {
                 .build();
     }
 
-    /**
-     * This is the updated helper method that calculates both percentage of spending AND percentage of budget.
-     */
     private List<CategorySpending> calculateSpendingByCategory(List<Expense> expenses, BigDecimal totalSpending, List<Budget> budgets) {
 
         // 1. Group expenses by category name, summing their amounts
@@ -149,9 +144,6 @@ public class ReportService {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * This helper method is unchanged.
-     */
     private List<SpendingOverTime> calculateSpendingByDay(List<Expense> expenses) {
         // Group expenses by date, summing their amounts
         Map<LocalDate, BigDecimal> dayMap = expenses.stream()

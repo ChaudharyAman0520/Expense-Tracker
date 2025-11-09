@@ -4,6 +4,7 @@ import com.example.demo.dto.ExpenseRequest;
 import com.example.demo.entity.Category;
 import com.example.demo.entity.Expense;
 import com.example.demo.entity.User;
+import com.example.demo.repository.ExpenseRepository;
 import com.example.demo.services.CategoryService;
 import com.example.demo.services.ExpenseService;
 import com.example.demo.services.UserService;
@@ -92,7 +93,7 @@ public class expenseController {
 
     @GetMapping("/category/{categoryName}")
     public ResponseEntity<List<Expense>> getExpensesByCategory(@PathVariable String categoryName) {
-        List<Expense> expenses = expenseService.findByCategoryNameRaw(categoryName);
+        List<Expense> expenses = expenseService.findByCategoryName(categoryName);
         if(expenses.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -106,5 +107,10 @@ public class expenseController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(expenses);
+    }
+
+    public List<Expense> findByCategoryNameRaw(String categoryName) {
+        // This tells the repository to find by the 'category' object's 'categoryName' property
+        return expenseService.findByCategoryName(categoryName);
     }
 }
